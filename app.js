@@ -18,10 +18,7 @@ app.use(express.static('./'));
 //SERVE BACK STATIC FILES
 app.use(express.static('./'));
 
-//ROUTE MODULES
-const index = require('./routes/index');
-
-//USER AUTH FUNCTIONS
+//EXP USER ARRAY
 let users = [
     {
         name:"xxxx",
@@ -33,6 +30,7 @@ let users = [
     }
 ];
 
+//USER AUTH APIs
 app.post('/login',(req,res)=>{
     let message = "";
     let token = "";
@@ -70,6 +68,7 @@ app.use((req, res, next)=>{
     let token = req.body.token || req.query.token || req.headers['x-access-token'];
     if(token){
         //Decode the token
+        console.log('hit decode if statement')
         jwt.verify(token,"samplesecret",(err,decod)=>{
             if(err){
                 res.status(403).json({
@@ -97,6 +96,9 @@ app.post('/getusers', (req,res)=>{
     });
     res.send(JSON.stringify({users:user_list}));
 });
+
+//ROUTE MODULES: make sure all routes that need auth are below USER AUTH MIDDLEWARE FUNCTIONS
+const index = require('./routes/index');
 
 //LISTEN
 app.listen(app.get('port'), ()=> {
