@@ -15,9 +15,8 @@ app.use(bodyParser.urlencoded({extended: true }));
 app.use(express.static('./'));
 
 //ROUTE MODULES
-app.get('/', (req,res)=>{
-    res.sendFile('index.html');
-});
+const index = require('./routes/index');
+const users = require('./routes/users');
 
 //LISTEN
 app.listen(app.get('port'), ()=> {
