@@ -1,0 +1,10 @@
+# package directories
+node_modules
+jspm_packages
+
+# logs
+*.log
+
+# misc
+.DS_Store/
+.idea/
