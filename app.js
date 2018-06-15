@@ -16,7 +16,45 @@ app.use(express.static('./'));
 
 //ROUTE MODULES
 const index = require('./routes/index');
-const users = require('./routes/users');
+
+//USER AUTH FUNCTIONS
+let users = [
+    {
+        name:"xxxx",
+        password:"xxxx"
+    },
+    {
+        name:"yyyy",
+        password:"yyyy"
+    }
+];
+
+app.post('/login',(req,res)=>{
+    let message = "";
+    for(let user of users){
+        if(user.name !== req.body.name){
+            message = "Wrong Name";
+        }else{
+            if(user.password !==req.body.password){
+                message = "Wrong Password";
+                break;
+            }
+            else{
+                message = "Login Successful";
+                break;
+            }
+        }
+    }
+    res.send(message);
+});
+
+app.post('/getusers', (req,res)=>{
+    let user_list = [];
+    users.forEach((user)=>{
+        user_list.push({"name":user.name});
+    });
+    res.send(JSON.stringify({users:user_list}));
+});
 
 //LISTEN
 app.listen(app.get('port'), ()=> {
